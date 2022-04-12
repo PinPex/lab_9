@@ -26,13 +26,11 @@
 
 		<Grid Grid.Column="1" RowDefinitions="*, 50" ColumnDefinitions="*, *" >
 			<Carousel Name="Slider" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Items="{Binding DirectoryImages}">
-				<Carousel.DataTemplates>
+				<Carousel.ItemTemplate>
 					<DataTemplate>
-						<Border Padding="60">
-						<Image Source="{Binding Img}" HorizontalAlignment="Stretch" />
-						</Border>
+							<Image Classes="Image" Source="{Binding Img}" ToolTip.Tip="{Binding Path}" />
 					</DataTemplate>
-				</Carousel.DataTemplates>
+				</Carousel.ItemTemplate>
 			</Carousel>
 			<Button Grid.Row="1" Grid.Column="0" Name="Back" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Back"/>
 			<Button Grid.Row="1" Grid.Column="1" Name="Next" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Next"/>
