@@ -28,7 +28,7 @@
 			<Carousel Name="Slider" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Items="{Binding Direct}">
 				<Carousel.ItemTemplate>
 					<DataTemplate>
-							<Image Classes="Image" Source="{Binding Img}" ToolTip.Tip="{Binding Path}" />
+							<Image Classes="Picture" Source="{Binding picture}" ToolTip.Tip="{Binding _path}" />
 					</DataTemplate>
 				</Carousel.ItemTemplate>
 			</Carousel>

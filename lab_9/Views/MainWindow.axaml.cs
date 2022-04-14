@@ -28,9 +28,9 @@ namespace lab_9.Views
             next_button.Click += (s, e) => slide.Next();
         }
 
-        private void Change(object sender, PointerReleasedEventArgs e)
+        private void Change(object send, PointerReleasedEventArgs point)
         {
-            TreeViewItem Item = sender as TreeViewItem;
+            TreeViewItem Item = send as TreeViewItem;
             Record selectedNode = Item.DataContext as Record;
 
             if (Record.exp.Any(selectedNode.Name.ToLower().EndsWith))
@@ -45,11 +45,11 @@ namespace lab_9.Views
             }
         }
 
-        private void Click_load(object sender, TemplateAppliedEventArgs e)
+        private void Click_load(object send, TemplateAppliedEventArgs e)
         {
-            ContentControl treeViewItem = sender as ContentControl;
-            Record selectedNode = treeViewItem.DataContext as Record;
-            selectedNode.get_files();
+            ContentControl treeViewItem = send as ContentControl;
+            Record current_record = treeViewItem.DataContext as Record;
+            current_record.get_files();
         }
     }
 }

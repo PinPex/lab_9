@@ -8,17 +8,17 @@ namespace lab_9.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public class Image
+        public class Picture
         {
-            public Bitmap Img { get; set; }
-            public string Path { get; set; }
-            public Image(string path)
+            public Bitmap picture { get; set; }
+            public string _path { get; set; }
+            public Picture(string path)
             {
-                    Img = new Bitmap(path);
-                    Path = path;
+                    picture = new Bitmap(path);
+                    _path = path;
             }
         }
-        public ObservableCollection<Image> Direct { get; set; }
+        public ObservableCollection<Picture> Direct { get; set; }
         public ObservableCollection<Record> Items { get; }
 
         List<string> Drives;
@@ -27,7 +27,7 @@ namespace lab_9.ViewModels
         {
             Drives = new List<string>();
             Items = new ObservableCollection<Record>();
-            Direct = new ObservableCollection<Image>();
+            Direct = new ObservableCollection<Picture>();
             DriveInfo[] drives = DriveInfo.GetDrives();
 
             for(int i = 0; i < drives.Length; ++i)
@@ -41,10 +41,10 @@ namespace lab_9.ViewModels
         public void RefreshImageList(List<string> paths_of_img, string current_image)
         {
             Direct.Clear();
-            Direct.Add(new Image(current_image));
+            Direct.Add(new Picture(current_image));
             for(int i = 0; i < paths_of_img.Count; ++i)
             {
-                Direct.Add(new Image(paths_of_img[i]));
+                Direct.Add(new Picture(paths_of_img[i]));
             }
         }
     }

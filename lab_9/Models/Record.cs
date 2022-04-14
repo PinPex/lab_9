@@ -12,39 +12,39 @@ namespace lab_9.Models
         public string _Path { get; }
 
         public static string[] exp = new[] { ".jpg", ".jpeg", ".png" };
-        public Record(string path, bool pass)
+        public Record(string path, bool disk)
         {
             Files = new ObservableCollection<Record>();
             _Path = path;
-            if (!pass)
-                Name = Path.GetFileName(path);
-            else
-                Name = "Disk " + path.Substring(0, path.IndexOf(":"));
+            Name = "Disk " + path.Substring(0, path.IndexOf(":"));
+        }
+        public Record(string path)
+        {
+            Files = new ObservableCollection<Record>();
+            _Path = path;
+            Name = Path.GetFileName(path);
         }
 
         public void get_files()
         {
-                try
+            try
+            {
+                IEnumerable<string> dirs = Directory.EnumerateDirectories(_Path, "*", SearchOption.TopDirectoryOnly);
+                foreach (string dir in dirs)
                 {
-                    IEnumerable<string> dirs = Directory.EnumerateDirectories(_Path, "*", SearchOption.TopDirectoryOnly);
-                    foreach (string dir in dirs)
-                    {
-                        Record thisnode = new Record(dir, false);
-                        Files.Add(thisnode);
-                    }
-
-                    
-                    IEnumerable<string> files = Directory.EnumerateFiles(_Path).Where(file => exp.Any(file.ToLower().EndsWith)).ToList();
-
-                    foreach (string file in files)
-                    {
-                        Files.Add(new Record(file, false));
-                    }
+                    Record current_record = new Record(dir);
+                    Files.Add(current_record);
                 }
-                catch
+                IEnumerable<string> files = Directory.EnumerateFiles(_Path).Where(file => exp.Any(file.ToLower().EndsWith)).ToList();
+                foreach (string file in files)
                 {
-
+                    Files.Add(new Record(file));
                 }
+            }
+            catch
+            {
+
             }
         }
     }
+}
