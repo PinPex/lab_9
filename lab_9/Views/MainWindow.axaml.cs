@@ -1,61 +1,55 @@
 using Avalonia.Controls;
 using lab_9.Models;
-using Avalonia.Interactivity;
 using lab_9.ViewModels;
 using System.Linq;
-using System.Collections.Generic;
 using System.IO;
 using Avalonia.Input;
-using Avalonia;
-using Avalonia.LogicalTree;
-using Avalonia.Layout;
 using Avalonia.Controls.Primitives;
 
 namespace lab_9.Views
 {
     public partial class MainWindow : Window
     {
-        private Carousel _Slider;
-        private Button _Back;
-        private Button _Next;
+        private Carousel slide;
+        private Button back_button;
+        private Button next_button;
 
         private void Init()
         {
-            _Slider = this.FindControl<Carousel>("Slider");
-            _Back = this.FindControl<Button>("Back");
-            _Next = this.FindControl<Button>("Next");
+            slide = this.FindControl<Carousel>("Slider");
+            back_button = this.FindControl<Button>("Back");
+            next_button = this.FindControl<Button>("Next");
         }
         public MainWindow()
         {
             InitializeComponent();
             Init();
-            _Back.Click += (s, e) => _Slider.Previous();
-            _Next.Click += (s, e) => _Slider.Next();
+            back_button.Click += (s, e) => slide.Previous();
+            next_button.Click += (s, e) => slide.Next();
         }
 
-        private void ChangedSelectedNode(object sender, PointerReleasedEventArgs e)
+        private void Change(object sender, PointerReleasedEventArgs e)
         {
-            string[] allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
-            TreeViewItem treeViewItem = sender as TreeViewItem;
-            Node selectedNode = treeViewItem.DataContext as Node;
+            TreeViewItem Item = sender as TreeViewItem;
+            Record selectedNode = Item.DataContext as Record;
 
-            if (allowedExtensions.Any(selectedNode.NodeName.ToLower().EndsWith))
+            if (Record.exp.Any(selectedNode.Name.ToLower().EndsWith))
             {
-                string path = selectedNode.FullPath.Substring(0, selectedNode.FullPath.IndexOf(selectedNode.NodeName));
-                var files = Directory.EnumerateFiles(path)
-                    .Where(file => allowedExtensions.Any(file.ToLower().EndsWith))
-                    .ToList();
-                files.Remove(selectedNode.FullPath);
+                string path = selectedNode._Path.Substring(0, selectedNode._Path.IndexOf(selectedNode.Name));
+                var files = Directory.EnumerateFiles(path).Where(file => Record.exp.Any(file.ToLower().EndsWith)).ToList();
+
+                files.Remove(selectedNode._Path);
                 var context = this.DataContext as MainWindowViewModel;
-                context.RefreshImageList(files, selectedNode.FullPath);
+
+                context.RefreshImageList(files, selectedNode._Path);
             }
         }
 
-        private void ClickForLoadNodes(object sender, TemplateAppliedEventArgs e)
+        private void Click_load(object sender, TemplateAppliedEventArgs e)
         {
             ContentControl treeViewItem = sender as ContentControl;
-            Node selectedNode = treeViewItem.DataContext as Node;
-            selectedNode.GetFilesAndFolders();
+            Record selectedNode = treeViewItem.DataContext as Record;
+            selectedNode.get_files();
         }
     }
 }

@@ -1,14 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.Linq;
-using System.Reactive;
-using Avalonia.Controls;
-using System.Windows.Input;
-using ReactiveUI;
 using System.IO;
-using System.Diagnostics;
 using lab_9.Models;
 using Avalonia.Media.Imaging;
 
@@ -26,34 +18,33 @@ namespace lab_9.ViewModels
                     Path = path;
             }
         }
-        public ObservableCollection<Image> DirectoryImages { get; set; }
-        public ObservableCollection<Node> Items { get; }
+        public ObservableCollection<Image> Direct { get; set; }
+        public ObservableCollection<Record> Items { get; }
 
-        List<string> allDrivesNames;
+        List<string> Drives;
 
         public MainWindowViewModel()
         {
-            allDrivesNames = new List<string>();
-            Items = new ObservableCollection<Node>();
-            DirectoryImages = new ObservableCollection<Image>();
-            DriveInfo[] allDrives = DriveInfo.GetDrives();
+            Drives = new List<string>();
+            Items = new ObservableCollection<Record>();
+            Direct = new ObservableCollection<Image>();
+            DriveInfo[] drives = DriveInfo.GetDrives();
 
-            for(int i = 0; i < allDrives.Length; i++)
+            for(int i = 0; i < drives.Length; ++i)
             {
-                allDrivesNames.Add(allDrives[i].Name);
-                Node rootNode = new Node(allDrives[i].Name, true);
-                rootNode.GetFilesAndFolders();
-                Items.Add(rootNode);
+                Drives.Add(drives[i].Name);
+                Record root_record = new Record(drives[i].Name, true);
+                Items.Add(root_record);
             }
         }
 
-        public void RefreshImageList(List<string> imagesPaths, string selectedImage)
+        public void RefreshImageList(List<string> paths_of_img, string current_image)
         {
-            DirectoryImages.Clear();
-            DirectoryImages.Add(new Image(selectedImage));
-            for(int i = 0; i < imagesPaths.Count; i++)
+            Direct.Clear();
+            Direct.Add(new Image(current_image));
+            for(int i = 0; i < paths_of_img.Count; ++i)
             {
-                DirectoryImages.Add(new Image(imagesPaths[i]));
+                Direct.Add(new Image(paths_of_img[i]));
             }
         }
     }

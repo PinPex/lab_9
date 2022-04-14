@@ -16,16 +16,16 @@
 	<Grid RowDefinitions="*" ColumnDefinitions="*, *">
 		<TreeView  SelectionMode="Single" Items="{Binding Items}" Grid.Column="0">
 			<TreeView.ItemTemplate>
-				<TreeDataTemplate ItemsSource="{Binding FilesAndFolders}">
-					<ContentControl TemplateApplied="ClickForLoadNodes">
-						<TreeViewItem PointerReleased="ChangedSelectedNode" Header="{Binding NodeName}"/>
+				<TreeDataTemplate ItemsSource="{Binding Files}">
+					<ContentControl TemplateApplied="Click_load">
+						<TreeViewItem PointerReleased="Change" Header="{Binding Name}"/>
 					</ContentControl>
 				</TreeDataTemplate>
 			</TreeView.ItemTemplate>
 		</TreeView>
 
 		<Grid Grid.Column="1" RowDefinitions="*, 50" ColumnDefinitions="*, *" >
-			<Carousel Name="Slider" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Items="{Binding DirectoryImages}">
+			<Carousel Name="Slider" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Items="{Binding Direct}">
 				<Carousel.ItemTemplate>
 					<DataTemplate>
 							<Image Classes="Image" Source="{Binding Img}" ToolTip.Tip="{Binding Path}" />
